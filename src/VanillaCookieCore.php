@@ -17,11 +17,12 @@ class VanillaCookieCore implements CookieCore
     public function __construct(array &$cookies = null)
     {
         if ($cookies) {
-            $this->cookies =& $cookies;
+            $this->cookies = & $cookies;
         } else {
-            $this->cookies =& $_COOKIE;
+            $this->cookies = & $_COOKIE;
         }
     }
+
     /**
      * Get the value of a cookie
      *
