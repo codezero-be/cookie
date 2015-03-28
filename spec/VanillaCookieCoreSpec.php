@@ -48,3 +48,7 @@ class VanillaCookieCoreSpec extends ObjectBehavior
         $this->delete(self::$cookieName)->shouldReturn(true);
     }
 }
+
+namespace CodeZero\Cookie;
+
+function setcookie() { return true; }
