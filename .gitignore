@@ -1,0 +1,8 @@
+/vendor
+/.cache
+/coverage
+coverage.*
+composer.phar
+.idea
+.DS_Store
+Thumbs.db

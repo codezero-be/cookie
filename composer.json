@@ -1,0 +1,34 @@
+{
+  "name": "codezero/cookie",
+  "description": "Your friendly, furry cookie monster. Get and set cookies with ease.",
+  "keywords": [
+    "cookie",
+    "encrypt",
+    "php",
+    "laravel"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ivan Vermeyen",
+      "email": "ivan@codezero.be"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "codezero/encrypter": "~1.0"
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.0",
+    "henrikbjorn/phpspec-code-coverage": "~1.0",
+    "illuminate/cookie": "~5.0",
+    "illuminate/http": "~5.0",
+    "illuminate/support": "~5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "CodeZero\\Cookie\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}
