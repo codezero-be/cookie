@@ -3,6 +3,26 @@
 class VanillaCookieCore implements CookieCore
 {
     /**
+     * Cookies
+     *
+     * @var array
+     */
+    private $cookies;
+
+    /**
+     * Create a new instance of VanillaCookieCore
+     *
+     * @param array $cookies
+     */
+    public function __construct(array &$cookies = null)
+    {
+        if ($cookies) {
+            $this->cookies =& $cookies;
+        } else {
+            $this->cookies =& $_COOKIE;
+        }
+    }
+    /**
      * Get the value of a cookie
      *
      * @param string $name
@@ -11,11 +31,11 @@ class VanillaCookieCore implements CookieCore
      */
     public function get($name)
     {
-        if ( ! isset($_COOKIE[$name])) {
+        if ( ! isset($this->cookies[$name])) {
             return null;
         }
 
-        return $_COOKIE[$name];
+        return $this->cookies[$name];
     }
 
     /**
@@ -45,8 +65,8 @@ class VanillaCookieCore implements CookieCore
      */
     public function delete($name)
     {
-        if (isset($_COOKIE[$name])) {
-            unset($_COOKIE[$name]);
+        if (isset($this->cookies[$name])) {
+            unset($this->cookies[$name]);
 
             return $this->set($name, null, -1);
         }

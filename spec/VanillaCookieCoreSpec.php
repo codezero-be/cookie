@@ -8,6 +8,11 @@ class VanillaCookieCoreSpec extends ObjectBehavior
     private static $cookieName = "name";
     private static $cookieValue = "value";
 
+    function let()
+    {
+        $this->beConstructedWith([]);
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('CodeZero\Cookie\VanillaCookieCore');
@@ -15,7 +20,7 @@ class VanillaCookieCoreSpec extends ObjectBehavior
 
     function it_gets_a_cookie()
     {
-        $_COOKIE[self::$cookieName] = self::$cookieValue;
+        $this->beConstructedWith([self::$cookieName => self::$cookieValue]);
         $this->get(self::$cookieName)->shouldReturn(self::$cookieValue);
     }
 
@@ -31,7 +36,7 @@ class VanillaCookieCoreSpec extends ObjectBehavior
 
     function it_deletes_a_cookie()
     {
-        $this->set(self::$cookieName, self::$cookieValue, time() + 60);
+        $this->beConstructedWith([self::$cookieName => self::$cookieValue]);
         $this->get(self::$cookieName)->shouldReturn(self::$cookieValue);
         $this->delete(self::$cookieName)->shouldReturn(true);
         $this->get(self::$cookieName)->shouldReturn(null);
