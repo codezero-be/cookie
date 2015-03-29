@@ -32,7 +32,7 @@ class VanillaCookieCore implements CookieCore
      */
     public function get($name)
     {
-        if ( ! isset($this->cookies[$name])) {
+        if ( ! $this->exists($name)) {
             return null;
         }
 
@@ -66,12 +66,24 @@ class VanillaCookieCore implements CookieCore
      */
     public function delete($name)
     {
-        if (isset($this->cookies[$name])) {
-            unset($this->cookies[$name]);
-
-            return $this->set($name, null, -1);
+        if ( ! $this->exists($name)) {
+            return true;
         }
 
-        return true;
+        unset($this->cookies[$name]);
+
+        return $this->set($name, null, -1);
+    }
+
+    /**
+     * Check if a cookie exists
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    private function exists($name)
+    {
+        return isset($this->cookies[$name]);
     }
 }
