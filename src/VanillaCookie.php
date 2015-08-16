@@ -53,12 +53,16 @@ class VanillaCookie implements Cookie
      *
      * @return bool
      */
-    public function store($cookieName, $cookieValue, $minutes = 60)
+    public function store($cookieName, $cookieValue, $minutes = 60, $path = "/", $domain = null, $secure = true, $httponly = true)
     {
         return $this->cookie->set(
             $cookieName,
             $this->encrypt($cookieValue),
-            $this->calculateExpirationTime($minutes)
+            $this->calculateExpirationTime($minutes),
+            $path,
+            $domain,
+            $secure,
+            $httponly
         );
     }
 
