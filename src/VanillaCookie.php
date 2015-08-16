@@ -50,6 +50,10 @@ class VanillaCookie implements Cookie
      * @param string $cookieName
      * @param string $cookieValue
      * @param int $minutes
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httponly
      *
      * @return bool
      */
