@@ -33,20 +33,20 @@ class VanillaCookieSpec extends ObjectBehavior
 
     function it_sets_a_cookie_for_an_hour(VanillaCookieCore $cookie)
     {
-        $cookie->set(self::$cookieName, self::$cookieValue, time() + 60 * 60)->shouldBeCalled()->willReturn(true);
+        $cookie->set(self::$cookieName, self::$cookieValue, time() + 60 * 60, "/", null, true, true)->shouldBeCalled()->willReturn(true);
         $this->store(self::$cookieName, self::$cookieValue)->shouldReturn(true);
     }
 
     function it_sets_a_cookie_for_a_custom_duration(VanillaCookieCore $cookie)
     {
         $minutes = 10;
-        $cookie->set(self::$cookieName, self::$cookieValue, time() + 60 * $minutes)->shouldBeCalled()->willReturn(true);
+        $cookie->set(self::$cookieName, self::$cookieValue, time() + 60 * $minutes, "/", null, true, true)->shouldBeCalled()->willReturn(true);
         $this->store(self::$cookieName, self::$cookieValue, $minutes)->shouldReturn(true);
     }
 
     function it_sets_a_cookie_forever(VanillaCookieCore $cookie)
     {
-        $cookie->set(self::$cookieName, self::$cookieValue, time() + 60 * 525600 * 5)->shouldBeCalled()->willReturn(true);
+        $cookie->set(self::$cookieName, self::$cookieValue, time() + 60 * 525600 * 5, "/", null, true, true)->shouldBeCalled()->willReturn(true);
         $this->forever(self::$cookieName, self::$cookieValue)->shouldReturn(true);
     }
 
@@ -60,7 +60,7 @@ class VanillaCookieSpec extends ObjectBehavior
     {
         $this->beConstructedWith($encrypter, $cookie);
         $encrypter->encrypt(self::$cookieValue)->shouldBeCalled()->willReturn('encrypted cookie');
-        $cookie->set(self::$cookieName, 'encrypted cookie', time() + 60 * 60)->shouldBeCalled()->willReturn(true);
+        $cookie->set(self::$cookieName, 'encrypted cookie', time() + 60 * 60, "/", null, true, true)->shouldBeCalled()->willReturn(true);
         $this->store(self::$cookieName, self::$cookieValue)->shouldReturn(true);
     }
 
