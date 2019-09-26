@@ -36,4 +36,13 @@ interface CookieCore
      * @return bool
      */
     public function delete($name);
+
+    /**
+     * Check if a cookie exists
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function exists($name);
 }
