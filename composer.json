@@ -19,16 +19,29 @@
     "codezero/encrypter": "~2.0"
   },
   "require-dev": {
-    "phpspec/phpspec": "~2.0",
-    "henrikbjorn/phpspec-code-coverage": "~1.0",
     "illuminate/cookie": ">=5.0",
     "illuminate/http": ">=5.0",
-    "illuminate/support": ">=5.0"
+    "illuminate/support": ">=5.0",
+    "phpunit/phpunit": "~8.0"
+  },
+  "scripts": {
+    "test": "phpunit"
   },
   "autoload": {
     "psr-4": {
       "CodeZero\\Cookie\\": "src/"
     }
   },
-  "minimum-stability": "stable"
+  "autoload-dev": {
+    "psr-4": {
+      "CodeZero\\Cookie\\Tests\\": "tests"
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }

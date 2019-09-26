@@ -2,8 +2,10 @@
 /.cache
 /coverage
 coverage.*
+/phpunit.xml
 composer.phar
 composer.lock
 .idea
 .DS_Store
 Thumbs.db
+.phpunit.result.cache
