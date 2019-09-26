@@ -14,12 +14,12 @@ class VanillaCookieCore implements CookieCore
      *
      * @param array $cookies
      */
-    public function __construct(array &$cookies = null)
+    public function __construct(array $cookies = null)
     {
         if ($cookies !== null) {
-            $this->cookies = & $cookies;
+            $this->cookies = $cookies;
         } else {
-            $this->cookies = & $_COOKIE;
+            $this->cookies = $_COOKIE;
         }
     }
 
