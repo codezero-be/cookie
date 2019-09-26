@@ -1,4 +1,6 @@
-<?php namespace CodeZero\Cookie;
+<?php
+
+namespace CodeZero\Cookie;
 
 use Illuminate\Support\ServiceProvider;
 

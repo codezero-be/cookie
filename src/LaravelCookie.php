@@ -1,4 +1,6 @@
-<?php namespace CodeZero\Cookie;
+<?php
+
+namespace CodeZero\Cookie;
 
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
@@ -10,14 +12,14 @@ class LaravelCookie implements Cookie
      *
      * @var Request
      */
-    private $request;
+    protected $request;
 
     /**
      * Laravel's CookieJar Class
      *
      * @var CookieJar
      */
-    private $cookie;
+    protected $cookie;
 
     /**
      * Create a new instance of LaravelCookie

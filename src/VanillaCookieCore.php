@@ -1,4 +1,6 @@
-<?php namespace CodeZero\Cookie; 
+<?php
+
+namespace CodeZero\Cookie;
 
 class VanillaCookieCore implements CookieCore
 {
@@ -7,7 +9,7 @@ class VanillaCookieCore implements CookieCore
      *
      * @var array
      */
-    private $cookies;
+    protected $cookies;
 
     /**
      * Create a new instance of VanillaCookieCore
@@ -82,7 +84,7 @@ class VanillaCookieCore implements CookieCore
      *
      * @return bool
      */
-    private function exists($name)
+    public function exists($name)
     {
         return isset($this->cookies[$name]);
     }

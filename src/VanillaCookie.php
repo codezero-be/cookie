@@ -1,4 +1,6 @@
-<?php namespace CodeZero\Cookie;
+<?php
+
+namespace CodeZero\Cookie;
 
 use CodeZero\Encrypter\Encrypter;
 
@@ -9,14 +11,14 @@ class VanillaCookie implements Cookie
      *
      * @var Encrypter
      */
-    private $encrypter;
+    protected $encrypter;
 
     /**
      * Cookie Core
      *
      * @var CookieCore
      */
-    private $cookie;
+    protected $cookie;
 
     /**
      * Create a new instance of VanillaCookie
@@ -36,6 +38,7 @@ class VanillaCookie implements Cookie
      * @param string $cookieName
      *
      * @return null|string
+     * @throws \CodeZero\Encrypter\DecryptException
      */
     public function get($cookieName)
     {
@@ -102,7 +105,7 @@ class VanillaCookie implements Cookie
      *
      * @return int
      */
-    private function calculateExpirationTime($minutes)
+    protected function calculateExpirationTime($minutes)
     {
         return ($minutes > 0)
             ? time() + (60 * $minutes)
@@ -116,7 +119,7 @@ class VanillaCookie implements Cookie
      *
      * @return string
      */
-    private function encrypt($cookieValue)
+    protected function encrypt($cookieValue)
     {
         if ($this->encrypter) {
             return $this->encrypter->encrypt($cookieValue);
@@ -131,8 +134,9 @@ class VanillaCookie implements Cookie
      * @param string $cookieValue
      *
      * @return string
+     * @throws \CodeZero\Encrypter\DecryptException
      */
-    private function decrypt($cookieValue)
+    protected function decrypt($cookieValue)
     {
         if ($this->encrypter && ! empty($cookieValue)) {
             return $this->encrypter->decrypt($cookieValue);
