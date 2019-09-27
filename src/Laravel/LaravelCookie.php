@@ -61,7 +61,7 @@ class LaravelCookie implements Cookie
      */
     public function store($cookieName, $cookieValue, $minutes = 60, $path = "/", $domain = null, $secure = true, $httpOnly = true)
     {
-        $this->cookie->queue($cookieName, $cookieValue, $minutes);
+        $this->cookie->queue($cookieName, $cookieValue, $minutes, $path, $domain, $secure, $httpOnly);
 
         return true;
     }
@@ -97,7 +97,7 @@ class LaravelCookie implements Cookie
      */
     public function delete($cookieName, $path = '/', $domain = null)
     {
-        $cookie = $this->cookie->forget($cookieName);
+        $cookie = $this->cookie->forget($cookieName, $path, $domain);
         $this->cookie->queue($cookie);
 
         return true;
