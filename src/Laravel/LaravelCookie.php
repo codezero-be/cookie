@@ -1,6 +1,6 @@
 <?php
 
-namespace CodeZero\Cookie;
+namespace CodeZero\Cookie\Laravel;
 
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
