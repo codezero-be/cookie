@@ -10,22 +10,22 @@ class LaravelCookie implements Cookie
     /**
      * Laravel's Request Class
      *
-     * @var Request
+     * @var \Illuminate\Http\Request
      */
     protected $request;
 
     /**
      * Laravel's CookieJar Class
      *
-     * @var CookieJar
+     * @var \Illuminate\Cookie\CookieJar
      */
     protected $cookie;
 
     /**
      * Create a new instance of LaravelCookie
      *
-     * @param Request $request
-     * @param CookieJar $cookie
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Cookie\CookieJar $cookie
      */
     public function __construct(Request $request, CookieJar $cookie)
     {
@@ -51,10 +51,14 @@ class LaravelCookie implements Cookie
      * @param string $cookieName
      * @param string $cookieValue
      * @param int $minutes
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httpOnly
      *
      * @return bool
      */
-    public function store($cookieName, $cookieValue, $minutes = 60)
+    public function store($cookieName, $cookieValue, $minutes = 60, $path = "/", $domain = null, $secure = true, $httpOnly = true)
     {
         $this->cookie->queue($cookieName, $cookieValue, $minutes);
 
@@ -66,26 +70,45 @@ class LaravelCookie implements Cookie
      *
      * @param string $cookieName
      * @param string $cookieValue
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httpOnly
      *
      * @return bool
      */
-    public function forever($cookieName, $cookieValue)
+    public function forever($cookieName, $cookieValue, $path = '/', $domain = null, $secure = null, $httpOnly = true)
     {
-        return $this->store($cookieName, $cookieValue, 60 * 24 * 365 * 5); // 5 years
+        $cookie = $this->cookie->forever($cookieName, $cookieValue, 60 * 24 * 365 * 5, $path, $domain, $secure, $httpOnly);
+        $this->cookie->queue($cookie);
+
+        return true;
     }
 
     /**
      * Delete a cookie
      *
      * @param string $cookieName
+     * @param string $path
+     * @param string $domain
      *
-     * @return bool
+     * @return void
      */
-    public function delete($cookieName)
+    public function delete($cookieName, $path = '/', $domain = null)
     {
         $cookie = $this->cookie->forget($cookieName);
         $this->cookie->queue($cookie);
+    }
 
-        return true;
+    /**
+     * Check if a cookie exists
+     *
+     * @param string $cookieName
+     *
+     * @return bool
+     */
+    public function exists($cookieName)
+    {
+        return $this->get($cookieName) !== null;
     }
 }

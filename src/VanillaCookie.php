@@ -9,27 +9,18 @@ class VanillaCookie implements Cookie
     /**
      * Encrypter
      *
-     * @var Encrypter
+     * @var \CodeZero\Encrypter\Encrypter
      */
     protected $encrypter;
 
     /**
-     * Cookie Core
-     *
-     * @var CookieCore
-     */
-    protected $cookie;
-
-    /**
      * Create a new instance of VanillaCookie
      *
-     * @param Encrypter $encrypter
-     * @param CookieCore $cookie
+     * @param \CodeZero\Encrypter\Encrypter $encrypter
      */
-    public function __construct(Encrypter $encrypter = null, CookieCore $cookie = null)
+    public function __construct(Encrypter $encrypter = null)
     {
         $this->encrypter = $encrypter;
-        $this->cookie = $cookie ?: new VanillaCookieCore();
     }
 
     /**
@@ -42,9 +33,11 @@ class VanillaCookie implements Cookie
      */
     public function get($cookieName)
     {
-        $cookieValue = $this->cookie->get($cookieName);
+        if ( ! $this->exists($cookieName)) {
+            return null;
+        }
 
-        return $this->decrypt($cookieValue);
+        return $this->decrypt($_COOKIE[$cookieName]);
     }
 
     /**
@@ -56,20 +49,20 @@ class VanillaCookie implements Cookie
      * @param string $path
      * @param string $domain
      * @param bool $secure
-     * @param bool $httponly
+     * @param bool $httpOnly
      *
      * @return bool
      */
-    public function store($cookieName, $cookieValue, $minutes = 60, $path = "/", $domain = null, $secure = true, $httponly = true)
+    public function store($cookieName, $cookieValue, $minutes = 60, $path = "/", $domain = null, $secure = true, $httpOnly = true)
     {
-        return $this->cookie->set(
+        return setcookie(
             $cookieName,
             $this->encrypt($cookieValue),
             $this->calculateExpirationTime($minutes),
             $path,
             $domain,
             $secure,
-            $httponly
+            $httpOnly
         );
     }
 
@@ -78,24 +71,47 @@ class VanillaCookie implements Cookie
      *
      * @param string $cookieName
      * @param string $cookieValue
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httpOnly
      *
      * @return bool
      */
-    public function forever($cookieName, $cookieValue)
+    public function forever($cookieName, $cookieValue, $path = '/', $domain = null, $secure = null, $httpOnly = true)
     {
-        return $this->store($cookieName, $cookieValue, 525600 * 5); // 525600 minutes = 1 year
+        return $this->store($cookieName, $cookieValue, 60 * 24 * 365 * 5, $path, $domain, $secure, $httpOnly);
     }
 
     /**
      * Delete a cookie
      *
      * @param string $cookieName
+     * @param string $path
+     * @param string $domain
+     *
+     * @return void
+     */
+    public function delete($cookieName, $path = '/', $domain = null)
+    {
+        if ( ! $this->exists($cookieName)) {
+            return;
+        }
+
+        unset($_COOKIE[$cookieName]);
+        $this->store($cookieName, '', -60, $path, $domain);
+    }
+
+    /**
+     * Check if a cookie exists
+     *
+     * @param string $cookieName
      *
      * @return bool
      */
-    public function delete($cookieName)
+    public function exists($cookieName)
     {
-        return $this->cookie->delete($cookieName);
+        return isset($_COOKIE[$cookieName]);
     }
 
     /**
@@ -107,9 +123,7 @@ class VanillaCookie implements Cookie
      */
     protected function calculateExpirationTime($minutes)
     {
-        return ($minutes > 0)
-            ? time() + (60 * $minutes)
-            : -1;
+        return time() + (60 * $minutes);
     }
 
     /**
