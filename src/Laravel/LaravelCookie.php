@@ -2,6 +2,7 @@
 
 namespace CodeZero\Cookie\Laravel;
 
+use CodeZero\Cookie\Cookie;
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
 
