@@ -37,6 +37,13 @@
       "CodeZero\\Cookie\\Tests\\": "tests"
     }
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CodeZero\\Cookie\\Laravel\\CookieServiceProvider"
+      ]
+    }
+  },
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,
