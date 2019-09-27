@@ -92,12 +92,14 @@ class LaravelCookie implements Cookie
      * @param string $path
      * @param string $domain
      *
-     * @return void
+     * @return null|bool
      */
     public function delete($cookieName, $path = '/', $domain = null)
     {
         $cookie = $this->cookie->forget($cookieName);
         $this->cookie->queue($cookie);
+
+        return true;
     }
 
     /**

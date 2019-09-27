@@ -90,16 +90,17 @@ class VanillaCookie implements Cookie
      * @param string $path
      * @param string $domain
      *
-     * @return void
+     * @return null|bool
      */
     public function delete($cookieName, $path = '/', $domain = null)
     {
         if ( ! $this->exists($cookieName)) {
-            return;
+            return null;
         }
 
         unset($_COOKIE[$cookieName]);
-        $this->store($cookieName, '', -60, $path, $domain);
+
+        return $this->store($cookieName, '', -60, $path, $domain);
     }
 
     /**
